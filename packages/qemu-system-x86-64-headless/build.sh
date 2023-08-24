@@ -15,29 +15,6 @@ TERMUX_PKG_REPLACES="qemu-system-x86_64-headless"
 TERMUX_PKG_PROVIDES="qemu-system-x86_64-headless"
 TERMUX_PKG_BUILD_IN_SRC=true
 
-termux_step_pre_configure() {
-	# Workaround for https://github.com/termux/termux-packages/issues/12261.
-	if [ $TERMUX_ARCH = "aarch64" ]; then
-		rm -f $TERMUX_PKG_BUILDDIR/_lib
-		mkdir -p $TERMUX_PKG_BUILDDIR/_lib
-
-		cd $TERMUX_PKG_BUILDDIR
-		mkdir -p _setjmp-aarch64
-		pushd _setjmp-aarch64
-		mkdir -p private
-		local s
-		for s in $TERMUX_PKG_BUILDER_DIR/setjmp-aarch64/{setjmp.S,private-*.h}; do
-			local f=$(basename ${s})
-			cp ${s} ./${f/-//}
-		done
-		$CC $CFLAGS $CPPFLAGS -I. setjmp.S -c
-		$AR cru $TERMUX_PKG_BUILDDIR/_lib/libandroid-setjmp.a setjmp.o
-		popd
-
-		LDFLAGS+=" -L$TERMUX_PKG_BUILDDIR/_lib -l:libandroid-setjmp.a"
-	fi
-}
-
 termux_step_configure() {
 	termux_setup_ninja
 
