@@ -1,0 +1,14 @@
+diff -uNr tini-0b44d3665869e46ccbac7414241b8256d6234dc4/CMakeLists.txt tini-0b44d3665869e46ccbac7414241b8256d6234dc4.mod/CMakeLists.txt
+--- tini-0b44d3665869e46ccbac7414241b8256d6234dc4/CMakeLists.txt	2023-01-31 03:28:46.000000000 +0800
++++ tini-0b44d3665869e46ccbac7414241b8256d6234dc4.mod/CMakeLists.txt	2023-12-12 16:30:48.837468923 +0800
+@@ -81,8 +81,8 @@
+ 
+ add_executable (tini src/tini.c)
+ 
+-add_executable (tini-static src/tini.c)
+-set_target_properties (tini-static PROPERTIES LINK_FLAGS "-Wl,--no-export-dynamic -static")
++# add_executable (tini-static src/tini.c)
++# set_target_properties (tini-static PROPERTIES LINK_FLAGS "-Wl,--no-export-dynamic -static")
+ 
+ # Installation
+ install (TARGETS tini DESTINATION bin)
